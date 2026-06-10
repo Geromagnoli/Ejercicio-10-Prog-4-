@@ -1,0 +1,6 @@
+## Plantilla: copia a `application.properties` y reemplaza los valores
+spring.datasource.url=jdbc:postgresql://<HOST>:5432/<DATABASE>
+spring.datasource.username=<USERNAME>
+spring.datasource.password=<PASSWORD>
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
