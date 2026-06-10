@@ -1,58 +1,61 @@
-# Ejercicio 10 - Configuración y entrega
+# Ejercicio 10 - Entrega
 
-Breve guía para preparar el proyecto antes de entregar en GitHub.
+Alumno: Geromagnoli
 
-1) Crear la base de datos en Render
-- Entrar a https://render.com → New + → PostgreSQL → elegir plan Free.
-- Copiar los datos de `Hostname`, `Database`, `Username`, `Password` (Connections).
+Instrucciones mínimas para ejecutar y probar (local):
 
-2) Configurar el proyecto localmente
-- Crear `src/main/resources/application.properties` con los datos de Render (no subir este archivo al repo).
-- Ejemplo de propiedades (usar tu Host/DB/user/password):
+1) Base de datos
+- Crear una base Postgres en Render (New → Postgres) o usar una existente.
+- Copiar Hostname, Port, Database, Username, Password.
 
-  spring.datasource.url=jdbc:postgresql://<HOST>:5432/<DATABASE>
+2) Configurar localmente
+- Crear `src/main/resources/application.properties` con estos valores (NO subir este archivo):
+
+  spring.datasource.url=jdbc:postgresql://<HOST_FULL>:5432/<DATABASE>?sslmode=require
   spring.datasource.username=<USERNAME>
   spring.datasource.password=<PASSWORD>
   spring.jpa.hibernate.ddl-auto=update
   spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
 
-3) Ejecutar la aplicación localmente
-- En Windows (PowerShell):
+3) Ejecutar la app
 
 ```powershell
-# Ejecutar con el wrapper de maven
 .\mvnw spring-boot:run
 ```
 
-4) Probar endpoints (ejemplos)
-- POST (crear producto):
+4) Endpoints a probar
 
-```bash
-curl -X POST http://localhost:8080/api/productos -H "Content-Type: application/json" -d '{"nombre":"Prueba","valor":10.5}'
-```
+- POST crear producto:
 
-- GET (listar productos):
+  ```powershell
+  Invoke-RestMethod -Uri http://localhost:8080/api/productos -Method Post -ContentType 'application/json' -Body '{"nombre":"Prueba","valor":10.5}'
+  ```
 
-```bash
-curl http://localhost:8080/api/productos
-```
+- GET listar productos:
 
-5) Inicializar Git y subir al repositorio público
-- Inicializar repo y añadir remoto:
+  ```powershell
+  Invoke-RestMethod -Uri http://localhost:8080/api/productos -Method Get
+  ```
 
-```bash
-git init
-git add .
-git commit -m "Entrega: ejercicio10 configurado"
-git remote add origin <URL_DE_TU_REPO>
-git branch -M main
-git push -u origin main
-```
+5) Subir a GitHub (resumen)
 
-6) Notas de seguridad
-- Evitá subir `src/main/resources/application.properties` con credenciales reales. Usa variables de entorno o archivos de configuración no incluidos en Git.
+- Crear repositorio público en GitHub (ej: Ejercicio-10-Prog-4-).
+- Desde la carpeta del proyecto:
 
-Si querés, puedo:
-- Ignorar `application.properties` y crear la plantilla `application.properties.template`.
-- Inicializar `git` aquí y configurar el `remote` si me das la URL.
-- Reemplazar la configuración del `pom.xml` a Spring Boot 3.x y Java 17 si la consigna lo exige estrictamente.
+  ```bash
+  git init
+  git add .
+  git commit -m "Entrega TP - Ejercicio10 - Lopez Geronimo"
+  git remote add origin https://github.com/Geromagnoli/Ejercicio-10-Prog-4-.git
+  git branch -M main
+  git push -u origin main
+  ```
+
+6) Comprobación de persistencia
+- Si el POST devuelve el objeto creado y el GET lo muestra, los datos están en la DB.
+- Para verificar directamente en la base (opcional) usar `psql` o DBeaver y ejecutar `SELECT * FROM producto;`.
+
+Notas:
+- No subas `application.properties` con credenciales reales. Mantén el archivo en tu máquina.
+- Si necesitás, te ayudo a pushear el repo (necesito que ejecutes el `git push` si pide autenticación, o me pases un token seguro por un método privado).
+
