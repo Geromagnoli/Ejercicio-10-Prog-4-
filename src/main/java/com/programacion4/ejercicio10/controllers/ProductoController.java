@@ -1,6 +1,8 @@
 package com.programacion4.ejercicio10.controllers;
 
 import org.springframework.web.bind.annotation.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 
 import com.programacion4.ejercicio10.models.Producto;
 import com.programacion4.ejercicio10.repo.ProductoRepository;
@@ -21,7 +23,9 @@ public class ProductoController {
     }
 
     @GetMapping
-    public Iterable<Producto> listar() {
-        return productoRepository.findAll();
+    public Page<Producto> listar(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        return productoRepository.findAll(PageRequest.of(page, size));
     }
 }

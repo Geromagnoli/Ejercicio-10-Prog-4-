@@ -1,0 +1,2 @@
+org.springframework.boot.env.EnvironmentPostProcessor=\
+com.programacion4.ejercicio10.config.DotenvEnvironmentPostProcessor
